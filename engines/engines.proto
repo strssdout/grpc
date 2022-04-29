@@ -13,8 +13,8 @@ message CarIdRequest {
 }
 
 message EngineResponse {
-    int32 id = 1;
-    string name = 2;
+    int32 id = 1; // @gotags: redis:"id"
+    string name = 2; // @gotags: redis:"name"
 }
 
 message EnginesResponse {

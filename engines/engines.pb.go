@@ -72,8 +72,8 @@ type EngineResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id   int32  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Id   int32  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty" redis:"id"`    // @gotags: redis:"id"
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty" redis:"name"` // @gotags: redis:"name"
 }
 
 func (x *EngineResponse) Reset() {
