@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option go_package = "/;engines";
+
+package engines;
+
+service Engine {
+    rpc GetEnginesByCarsId (CarIdRequest) returns (EnginesResponse);
+}
+
+message CarIdRequest {
+    repeated int32 id = 1 [packed=true];
+}
+
+message EngineResponse {
+    int32 id = 1;
+    string name = 2;
+}
+
+message EnginesResponse {
+    repeated EngineResponse engines = 1;
+}
