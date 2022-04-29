@@ -1,4 +1,4 @@
-module github.com/strssdout/grpc.git
+module github.com/strssdout/grpc
 
 go 1.16
 
