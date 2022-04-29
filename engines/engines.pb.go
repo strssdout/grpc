@@ -127,7 +127,7 @@ type EnginesResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Engines []*EngineResponse `protobuf:"bytes,1,rep,name=engines,proto3" json:"engines,omitempty"`
+	Engines []*EngineResponse `protobuf:"bytes,1,rep,name=engines,proto3" json:"engines,omitempty" redis:"engines"` // @gotags: redis:"engines"
 }
 
 func (x *EnginesResponse) Reset() {

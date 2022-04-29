@@ -18,5 +18,5 @@ message EngineResponse {
 }
 
 message EnginesResponse {
-    repeated EngineResponse engines = 1;
+    repeated EngineResponse engines = 1; // @gotags: redis:"engines"
 }
