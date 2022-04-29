@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+option go_package = "/;cars";
+
+package cars;
+
+service Car {
+    rpc GetUserCars (UserRequest) returns (CarsResponse);
+
+    rpc GetUserEngines (UserRequest) returns (EnginesResponse);
+
+    rpc GetCarEngines (CarIdRequest) returns (EnginesResponse);
+
+    rpc GetEngines (CarLabelRequest) returns (EnginesResponse);
+
+    rpc GetEnginesByCarsId (CarIdRequest) returns (EnginesResponse);
+}
+
+message UserRequest {
+    int32 id = 1;
+}
+
+message CarIdRequest {
+    repeated int32 id = 1 [packed=true];
+}
+
+message CarLabelRequest {
+    string name = 1;
+}
+
+message CarResponse {
+    int32 id = 1;
+    string name = 2;
+}
+
+message CarsResponse {
+    repeated CarResponse cars = 1;
+}
+
+message EngineResponse {
+    int32 id = 1;
+    string name = 2;
+}
+
+message EnginesResponse {
+    repeated EngineResponse engines = 1;
+}
