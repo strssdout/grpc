@@ -12,8 +12,6 @@ service Car {
     rpc GetCarEngines (CarIdRequest) returns (EnginesResponse);
 
     rpc GetEngines (CarLabelRequest) returns (EnginesResponse);
-
-    rpc GetEnginesByCarsId (CarIdRequest) returns (EnginesResponse);
 }
 
 message UserRequest {

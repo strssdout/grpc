@@ -26,7 +26,6 @@ type CarClient interface {
 	GetUserEngines(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*EnginesResponse, error)
 	GetCarEngines(ctx context.Context, in *CarIdRequest, opts ...grpc.CallOption) (*EnginesResponse, error)
 	GetEngines(ctx context.Context, in *CarLabelRequest, opts ...grpc.CallOption) (*EnginesResponse, error)
-	GetEnginesByCarsId(ctx context.Context, in *CarIdRequest, opts ...grpc.CallOption) (*EnginesResponse, error)
 }
 
 type carClient struct {
@@ -73,15 +72,6 @@ func (c *carClient) GetEngines(ctx context.Context, in *CarLabelRequest, opts ..
 	return out, nil
 }
 
-func (c *carClient) GetEnginesByCarsId(ctx context.Context, in *CarIdRequest, opts ...grpc.CallOption) (*EnginesResponse, error) {
-	out := new(EnginesResponse)
-	err := c.cc.Invoke(ctx, "/cars.Car/GetEnginesByCarsId", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // CarServer is the server API for Car service.
 // All implementations must embed UnimplementedCarServer
 // for forward compatibility
@@ -90,7 +80,6 @@ type CarServer interface {
 	GetUserEngines(context.Context, *UserRequest) (*EnginesResponse, error)
 	GetCarEngines(context.Context, *CarIdRequest) (*EnginesResponse, error)
 	GetEngines(context.Context, *CarLabelRequest) (*EnginesResponse, error)
-	GetEnginesByCarsId(context.Context, *CarIdRequest) (*EnginesResponse, error)
 	mustEmbedUnimplementedCarServer()
 }
 
@@ -109,9 +98,6 @@ func (UnimplementedCarServer) GetCarEngines(context.Context, *CarIdRequest) (*En
 }
 func (UnimplementedCarServer) GetEngines(context.Context, *CarLabelRequest) (*EnginesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetEngines not implemented")
-}
-func (UnimplementedCarServer) GetEnginesByCarsId(context.Context, *CarIdRequest) (*EnginesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetEnginesByCarsId not implemented")
 }
 func (UnimplementedCarServer) mustEmbedUnimplementedCarServer() {}
 
@@ -198,24 +184,6 @@ func _Car_GetEngines_Handler(srv interface{}, ctx context.Context, dec func(inte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Car_GetEnginesByCarsId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CarIdRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CarServer).GetEnginesByCarsId(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/cars.Car/GetEnginesByCarsId",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CarServer).GetEnginesByCarsId(ctx, req.(*CarIdRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // Car_ServiceDesc is the grpc.ServiceDesc for Car service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -238,10 +206,6 @@ var Car_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetEngines",
 			Handler:    _Car_GetEngines_Handler,
-		},
-		{
-			MethodName: "GetEnginesByCarsId",
-			Handler:    _Car_GetEnginesByCarsId_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
